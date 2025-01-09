@@ -1,0 +1,13 @@
+{
+  "name": "hello-world-rds",
+  "version": "1.0.0",
+  "description": "Hello World app that connects to RDS",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.13.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
