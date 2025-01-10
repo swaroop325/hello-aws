@@ -1,5 +1,6 @@
 const { Pool } = require("pg");
 const express = require("express");
+const { checkDbConnection } = require("./utils");
 
 const PORT = process.env.PORT || 8080;
 const RDS_HOST = process.env.RDS_HOST || "localhost";
@@ -21,20 +22,6 @@ const pool = new Pool({
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
   ssl: { rejectUnauthorized: REJECT_UNAUTHORISED }, // Use SSL without verifying certificates
 });
-
-// Function to check database connection health
-async function checkDbConnection() {
-  try {
-    const client = await pool.connect(); // Attempt to acquire a client
-    await client.query("SELECT 1"); // Simple query to test connection
-    client.release(); // Release client back to the pool
-    console.log("Database connection is healthy");
-    return true;
-  } catch (err) {
-    console.error("Database connection error:", err.message);
-    return false;
-  }
-}
 
 // Set up Express app
 const app = express();
