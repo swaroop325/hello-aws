@@ -1,6 +1,5 @@
 const { Pool } = require("pg");
 const express = require("express");
-const { checkDbConnection } = require("./utils");
 
 const PORT = process.env.PORT || 8080;
 const RDS_HOST = process.env.RDS_HOST || "localhost";
