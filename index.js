@@ -1,16 +1,25 @@
 const { Pool } = require("pg");
 const express = require("express");
 
-// Create a connection pool using environment variables
+const PORT = process.env.PORT || 8080;
+const RDS_HOST = process.env.RDS_HOST || "localhost";
+const RDS_PASSWORD = process.env.RDS_PASSWORD || "";
+const RDS_DB_NAME = process.env.RDS_DB_NAME || "";
+const RDS_PORT = process.env.RDS_PORT || 5432;
+const RDS_USER = process.env.RDS_USER || "postgres";
+const REJECT_UNAUTHORISED = process.env.REJECT_UNAUTHORISED || false;
+
+const TEST_RDS = process.env.TEST_RDS || "false";
+
 const pool = new Pool({
-  host: process.env.RDS_HOST || "localhost",   // RDS host
-  user: process.env.RDS_USER || "postgres",   // RDS username
-  password: process.env.RDS_PASSWORD || "",   // RDS password
-  database: process.env.RDS_DB_NAME || "test", // RDS database name
-  port: process.env.RDS_PORT || 5432,         // PostgreSQL port
-  max: 10,                                    // Maximum number of connections in the pool
-  idleTimeoutMillis: 30000,                   // Close idle clients after 30 seconds
-  ssl: { rejectUnauthorized: false }, // Use SSL without verifying certificates
+  host: RDS_HOST,
+  user: RDS_USER,
+  password: RDS_PASSWORD,
+  database: RDS_DB_NAME,
+  port: Number(RDS_PORT),
+  max: 10, // Maximum number of connections in the pool
+  idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+  ssl: { rejectUnauthorized: REJECT_UNAUTHORISED }, // Use SSL without verifying certificates
 });
 
 // Function to check database connection health
@@ -29,7 +38,6 @@ async function checkDbConnection() {
 
 // Set up Express app
 const app = express();
-const PORT = process.env.PORT || 8080;
 
 // Middleware to ensure app handles errors gracefully
 app.use((err, req, res, next) => {
@@ -39,29 +47,22 @@ app.use((err, req, res, next) => {
 
 // Health check endpoint
 app.get("/health", async (req, res) => {
-  const isDbHealthy = await checkDbConnection();
-  if (isDbHealthy) {
-    res.status(200).send("Service is UP!! Database connection is established");
+  if (TEST_RDS) {
+    const isDbHealthy = await checkDbConnection();
+    if (isDbHealthy) {
+      res
+        .status(200)
+        .send("Service is UP!! Database connection is established");
+    } else {
+      res.status(500).send("Database Connection Error");
+    }
   } else {
-    res.status(500).send("Database connection error");
-  }
-});
-
-// Example endpoint with error handling
-app.get("/data", async (req, res) => {
-  try {
-    const client = await pool.connect(); // Acquire a client from the pool
-    const result = await client.query("SELECT 1"); // Replace with your query
-    client.release(); // Release the client back to the pool
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error("Error querying database:", err.message);
-    res.status(500).send("Database error");
+    res.status(200).send("Service is UP!!");
   }
 });
 
 // Start the server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
