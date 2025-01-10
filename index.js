@@ -10,7 +10,7 @@ const RDS_PORT = process.env.RDS_PORT || 5432;
 const RDS_USER = process.env.RDS_USER || "postgres";
 const REJECT_UNAUTHORISED = process.env.REJECT_UNAUTHORISED || false;
 
-const TEST_RDS = process.env.TEST_RDS || "false";
+const TEST_RDS = process.env.TEST_RDS || false;
 
 const pool = new Pool({
   host: RDS_HOST,
