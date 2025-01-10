@@ -32,6 +32,19 @@ app.use((err, req, res, next) => {
   res.status(500).send("Internal Server Error");
 });
 
+async function checkDbConnection() {
+  try {
+    const client = await pool.connect(); // Attempt to acquire a client
+    await client.query("SELECT 1"); // Simple query to test connection
+    client.release(); // Release client back to the pool
+    console.log("Database connection is healthy");
+    return true;
+  } catch (err) {
+    console.error("Database connection error:", err.message);
+    return false;
+  }
+}
+
 // Health check endpoint
 app.get("/health", async (req, res) => {
   if (TEST_RDS) {
