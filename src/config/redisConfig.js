@@ -16,7 +16,7 @@ redisClient.connect().catch((err) => {
 });
 
 // Check Redis connection health
-export const checkRedisConnection = async () => {
+const checkRedisConnection = async () => {
   try {
     await redisClient.ping(); // Ping Redis server
     console.log("Redis connection is healthy");
@@ -27,4 +27,6 @@ export const checkRedisConnection = async () => {
   }
 };
 
-export { redisClient };
+module.exports = {
+  checkRedisConnection,
+};
