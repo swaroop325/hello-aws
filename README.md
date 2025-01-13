@@ -1,2 +1,2 @@
-# hello-rds
-sample image for testing ecs-rds connectivety
+# hello-aws
+sample image for testing aws services connectivity
