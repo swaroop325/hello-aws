@@ -1,11 +1,11 @@
-// services/redisService.ts
-import * as redis from "redis";
+const { REDIS_PORT, REDIS_HOST } = require("../constants");
+const redis = require("redis");
 
 // Redis client configuration
 const redisClient = redis.createClient({
   socket: {
-    host: process.env.REDIS_HOST || "localhost",
-    port: parseInt(process.env.REDIS_PORT || "6379", 10),
+    host: REDIS_HOST || "localhost",
+    port: REDIS_PORT,
   },
   password: process.env.REDIS_PASSWORD || undefined,
 });
