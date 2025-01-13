@@ -11,14 +11,16 @@ const secretsClient = new SecretsManagerClient({
 
 async function getRdsPasswordFromSecretsManager() {
   try {
-    // Fetch the secret
+    const secret = process.env.RDS_PASSWORD
+    console.log(`Fetching secret ${secret} from secret manager`);
     const command = new GetSecretValueCommand({
-      SecretId: process.env.RDS_PASSWORD, // Secret name from the environment variable
+      SecretId: secret, // Secret name from the environment variable
     });
 
     const data = await secretsClient.send(command);
 
     if (data.SecretString) {
+      console.log("Fetched secret::", JSON.stringify(data.SecretString));
       // Parse JSON secret and return the password
       const secret = JSON.parse(data.SecretString);
       return secret.password; // Adjust this based on how the password is stored in your secret
