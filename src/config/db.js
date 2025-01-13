@@ -1,20 +1,27 @@
 // db.js
 const { Pool } = require("pg");
 const { getRdsPasswordFromSecretsManager } = require("./awsSecretManager");
+const {
+  RDS_HOST,
+  RDS_USER,
+  RDS_DB_NAME,
+  RDS_PORT,
+  REJECT_UNAUTHORISED,
+} = require("../constants");
 
 async function createDbPool() {
   try {
     const RDS_PASSWORD = await getRdsPasswordFromSecretsManager();
 
     const pool = new Pool({
-      host: process.env.RDS_HOST || "localhost",
-      user: process.env.RDS_USER || "postgres",
+      host: RDS_HOST || "localhost",
+      user: RDS_USER || "postgres",
       password: RDS_PASSWORD,
-      database: process.env.RDS_DB_NAME || "",
-      port: Number(process.env.RDS_PORT || 5432),
+      database: RDS_DB_NAME || "",
+      port: RDS_PORT,
       max: 10, // Maximum number of connections in the pool
       idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-      ssl: { rejectUnauthorized: process.env.REJECT_UNAUTHORISED || false },
+      ssl: { rejectUnauthorized: REJECT_UNAUTHORISED },
     });
 
     return pool;

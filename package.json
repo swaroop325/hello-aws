@@ -4,6 +4,7 @@
   "description": "Hello World app that connects to RDS",
   "main": "src/app.js",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.726.1",
     "@aws-sdk/client-secrets-manager": "^3.726.1",
     "express": "^4.17.1",
     "pg": "^8.13.1"

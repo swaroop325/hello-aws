@@ -3,15 +3,16 @@ const {
   SecretsManagerClient,
   GetSecretValueCommand,
 } = require("@aws-sdk/client-secrets-manager");
+const { REGION, RDS_PASSWORD } = require("../constants");
 
 // Initialize the Secrets Manager client
 const secretsClient = new SecretsManagerClient({
-  region: process.env.AWS_REGION || "ap-southeast-1",
+  region: REGION,
 });
 
 async function getRdsPasswordFromSecretsManager() {
   try {
-    const secret = process.env.RDS_PASSWORD
+    const secret = RDS_PASSWORD;
     console.log(`Fetching secret ${secret} from secret manager`);
     const command = new GetSecretValueCommand({
       SecretId: secret, // Secret name from the environment variable

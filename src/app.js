@@ -1,4 +1,4 @@
-const TEST_RDS = process.env.TEST_RDS || false;
+
 
 // app.js
 const express = require("express");
@@ -6,7 +6,7 @@ const { createDbPool } = require("./config/db");
 const healthRoutes = require("./routes/health");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+
 
 // Use health check route
 app.use(healthRoutes);
@@ -14,7 +14,6 @@ app.use(healthRoutes);
 // Start the application
 async function startApp() {
   try {
-    const pool = await createDbPool();
 
     // Graceful shutdown handling
     process.on("SIGINT", async () => {
