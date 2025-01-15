@@ -1,5 +1,5 @@
 const REGION = process.env.AWS_REGION || "ap-southeast-1";
-const PORT = process.env.PORT || 8080;
+const PORT = Number(process.env.PORT) || 8080;
 
 // RDS
 const TEST_RDS = process.env.TEST_RDS || false;
