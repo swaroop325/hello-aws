@@ -2,7 +2,6 @@
 
 // app.js
 const express = require("express");
-const { createDbPool } = require("./config/db");
 const healthRoutes = require("./routes/health");
 const { PORT } = require("./constants");
 

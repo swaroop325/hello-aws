@@ -1,5 +1,3 @@
-
-
 async function checkRedisService() {
   try {
     const pool = await createDbPool();
@@ -15,5 +13,5 @@ async function checkRedisService() {
 }
 
 module.exports = {
-  checkDbConnection,
+  checkRedisService,
 };
