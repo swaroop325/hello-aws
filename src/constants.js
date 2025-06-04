@@ -1,3 +1,5 @@
+// require("dotenv").config();
+
 const REGION = process.env.AWS_REGION || "ap-southeast-1";
 const PORT = Number(process.env.PORT) || 8080;
 
@@ -11,14 +13,22 @@ const RDS_PORT = Number(process.env.RDS_PORT || 5432);
 const REJECT_UNAUTHORISED = process.env.REJECT_UNAUTHORISED || false;
 
 // S3
-const TEST_S3 = process.env.TEST_S3 || false;
-const BUCKET_NAME = process.env.BUCKET_NAME || "";
+// const TEST_S3 = process.env.TEST_S3 || false;
+// const BUCKET_NAME = process.env.BUCKET_NAME || "";
+const TEST_S3 = process.env.TEST_S3;
+const BUCKET_NAME = "cloudbox-workload-test"
 
 // REDIS
 const TEST_REDIS = process.env.TEST_REDIS || false;
 const REDIS_HOST = process.env.REDIS_HOST || false;
 const REDIS_PORT = Number(process.env.REDIS_PORT) || 6379;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD || "";
+
+const TEST_SES = false;
+const TEST_SQS = false;
+const TEST_SNS = true;
+const TEST_KMS = false;
+const TEST_EVENTBRIDGE = true;
 
 module.exports = {
   REGION,
@@ -36,4 +46,9 @@ module.exports = {
   REDIS_HOST,
   REDIS_PORT,
   REDIS_PASSWORD,
+  TEST_KMS,
+  TEST_SES,
+  TEST_SNS,
+  TEST_SQS,
+  TEST_EVENTBRIDGE,
 };
