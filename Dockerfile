@@ -19,6 +19,8 @@ ENV RDS_HOST=your-rds-endpoint
 ENV RDS_USER=your-db-username
 ENV RDS_PASSWORD=your-db-password
 ENV RDS_DB_NAME=your-db-name
+ENV BUCKET_NAME=<your-actual-s3-bucket-name>
+ENV TRANSFER_SERVER_ID=<your-actual-transfer-server-id>
 
 # Step 7: Run the application
 CMD ["npm", "start"]
