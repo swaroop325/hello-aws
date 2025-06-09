@@ -2,13 +2,27 @@
 const express = require("express");
 const { checkDbConnection } = require("../services/dbService");
 const { checkS3Connection } = require("../services/s3Service");
-const { TEST_RDS, TEST_S3, TEST_REDIS, TEST_SES, TEST_SQS, TEST_SNS, TEST_KMS, TEST_EVENTBRIDGE } = require("../constants");
+const {
+  TEST_RDS,
+  TEST_S3,
+  TEST_REDIS,
+  TEST_SES,
+  TEST_SQS,
+  TEST_SNS,
+  TEST_KMS,
+  TEST_EVENTBRIDGE,
+} = require("../constants");
 const { checkRedisConnection } = require("../config/redisConfig");
 const { checkSesConnection } = require("../services/sesService");
 const { checkSnsConnection } = require("../services/snsService");
 const { checkSqsConnection } = require("../services/sqsService");
 const { checkKmsConnection } = require("../services/kmsService");
-const { checkEventBridgeConnection } = require("../services/eventBridgeService");
+const {
+  checkEventBridgeConnection,
+} = require("../services/eventBridgeService");
+const {
+  checkTransferFamilyHealth,
+} = require("../services/transferFamilyService");
 
 const router = express.Router();
 
@@ -30,7 +44,7 @@ router.get("/health", async (req, res) => {
 
 router.get("/s3", async (req, res) => {
   if (TEST_S3 === "true") {
-    res.status(200).json({ "message": "true" })
+    res.status(200).json({ message: "true" });
     try {
       const s3 = await checkS3Connection();
       if (s3) {
@@ -41,12 +55,10 @@ router.get("/s3", async (req, res) => {
         res.status(500).send("S3 Connection Error:: " + s3);
       }
     } catch (error) {
-      res.status(500).json({ error: error })
+      res.status(500).json({ error: error });
     }
-
-  }
-  else {
-    res.status(500).json({ "message": "false" })
+  } else {
+    res.status(500).json({ message: "false" });
   }
 });
 
@@ -94,14 +106,22 @@ router.get("/kms", async (req, res) => {
 });
 
 router.get("/eventbridge", async (req, res) => {
-  if (!TEST_EVENTBRIDGE) return res.status(200).send("EventBridge check disabled");
+  if (!TEST_EVENTBRIDGE)
+    return res.status(200).send("EventBridge check disabled");
   const eventbridgeStatus = await checkEventBridgeConnection();
   return eventbridgeStatus
     ? res.status(200).send("EventBridge Connection is successful")
     : res.status(500).send("EventBridge Connection Error");
 });
 
-module.exports = router;
+router.get("/transferfamily", async (req, res) => {
+  const isHealthy = await checkTransferFamilyHealth();
 
+  if (isHealthy) {
+    return res.status(200).send("Transfer Family is ONLINE");
+  } else {
+    return res.status(500).send("Transfer Family is NOT available");
+  }
+});
 
 module.exports = router;

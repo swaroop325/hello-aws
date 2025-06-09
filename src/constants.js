@@ -16,7 +16,10 @@ const REJECT_UNAUTHORISED = process.env.REJECT_UNAUTHORISED || false;
 // const TEST_S3 = process.env.TEST_S3 || false;
 // const BUCKET_NAME = process.env.BUCKET_NAME || "";
 const TEST_S3 = process.env.TEST_S3;
-const BUCKET_NAME = "cloudbox-workload-test"
+
+//transfer-family
+const BUCKET_NAME = process.env.BUCKET_NAME || "";
+const TRANSFER_SERVER_ID = process.env.TRANSFER_SERVER_ID;
 
 // REDIS
 const TEST_REDIS = process.env.TEST_REDIS || false;
@@ -51,4 +54,5 @@ module.exports = {
   TEST_SNS,
   TEST_SQS,
   TEST_EVENTBRIDGE,
+  TRANSFER_SERVER_ID,
 };
