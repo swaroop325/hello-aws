@@ -1,7 +1,7 @@
 // require("dotenv").config();
 
 const REGION = process.env.AWS_REGION || "ap-southeast-1";
-const PORT = Number(process.env.PORT) || 8080;
+const PORT = Number(process.env.PORT) || 3000;
 
 // RDS
 const TEST_RDS = process.env.TEST_RDS || false;
@@ -26,9 +26,9 @@ const REDIS_PASSWORD = process.env.REDIS_PASSWORD || "";
 
 const TEST_SES = false;
 const TEST_SQS = false;
-const TEST_SNS = true;
+const TEST_SNS = false;
 const TEST_KMS = false;
-const TEST_EVENTBRIDGE = true;
+const TEST_EVENTBRIDGE = false;
 
 module.exports = {
   REGION,

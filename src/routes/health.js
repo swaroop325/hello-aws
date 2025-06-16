@@ -24,7 +24,7 @@ router.get("/health", async (req, res) => {
       res.status(500).send("Database Connection Error");
     }
   } else {
-    res.status(200).send("Service is UP!! Definition 9");
+    res.status(200).send("Service is UP!! Definition EKS verification");
   }
 });
 
@@ -100,8 +100,5 @@ router.get("/eventbridge", async (req, res) => {
     ? res.status(200).send("EventBridge Connection is successful")
     : res.status(500).send("EventBridge Connection Error");
 });
-
-module.exports = router;
-
 
 module.exports = router;
