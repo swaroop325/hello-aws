@@ -17,6 +17,7 @@ const { checkSesConnection } = require("../services/sesService");
 const { checkSnsConnection } = require("../services/snsService");
 const { checkSqsConnection } = require("../services/sqsService");
 const { checkKmsConnection } = require("../services/kmsService");
+const { checkLambdaConnection } = require("../services/lambdaService");
 const {
   checkEventBridgeConnection,
 } = require("../services/eventBridgeService");
@@ -121,6 +122,19 @@ router.get("/transferfamily", async (req, res) => {
     return res.status(200).send("Transfer Family is ONLINE");
   } else {
     return res.status(500).send("Transfer Family is NOT available");
+  }
+});
+
+router.get("/lambda", async (req, res) => {
+  const lambdaStatus = await checkLambdaConnection();
+  if (lambdaStatus) {
+    return res
+      .status(200)
+      .send("Lambda function is reachable and returned expected response");
+  } else {
+    return res
+      .status(500)
+      .send("Lambda function is not reachable or returned unexpected response");
   }
 });
 

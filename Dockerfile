@@ -22,5 +22,10 @@ ENV RDS_DB_NAME=your-db-name
 ENV BUCKET_NAME=<your-actual-s3-bucket-name>
 ENV TRANSFER_SERVER_ID=<your-actual-transfer-server-id>
 
+# Step 6.1: Set Lambda test environment variables (override in ECS if needed)
+ENV REGION=ap-southeast-1
+ENV TEST_LAMBDA=true
+ENV TEST_LAMBDA_FUNCTION_NAME=helloLambda
+
 # Step 7: Run the application
 CMD ["npm", "start"]
