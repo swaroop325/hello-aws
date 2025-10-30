@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 
 const REGION = process.env.AWS_REGION || "ap-southeast-1";
 const PORT = Number(process.env.PORT) || 8080;
@@ -11,6 +11,8 @@ const RDS_USER = process.env.RDS_USER || "postgres";
 const RDS_DB_NAME = process.env.RDS_DB_NAME || "";
 const RDS_PORT = Number(process.env.RDS_PORT || 5432);
 const REJECT_UNAUTHORISED = process.env.REJECT_UNAUTHORISED || false;
+const TEST_LAMBDA = process.env.TEST_LAMBDA || "false";
+const TEST_LAMBDA_FUNCTION_NAME = process.env.TEST_LAMBDA_FUNCTION_NAME;
 
 // S3
 // const TEST_S3 = process.env.TEST_S3 || false;
@@ -55,4 +57,6 @@ module.exports = {
   TEST_SQS,
   TEST_EVENTBRIDGE,
   TRANSFER_SERVER_ID,
+  TEST_LAMBDA,
+  TEST_LAMBDA_FUNCTION_NAME,
 };
